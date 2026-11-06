@@ -1,0 +1,507 @@
+<linker>
+  <assembly fullname="MVZ2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="MVZ2.Addons.AddonsController" preserve="all" />
+    <type fullname="MVZ2.Addons.AddonsUI" preserve="all" />
+    <type fullname="MVZ2.Addons.ResourcePackItem" preserve="all" />
+    <type fullname="MVZ2.Addons.ResourcePacksController" preserve="all" />
+    <type fullname="MVZ2.Addons.ResourcePacksUI" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacController" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacDescriptionLinkHandler" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacDescriptionTag" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacEntry" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacEntryGroupUI" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacManager" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacModel" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacTaggedDescription" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacTagIcon" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacTagIconLayer" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacUI" preserve="all" />
+    <type fullname="MVZ2.Almanacs.AlmanacZoomPage" preserve="all" />
+    <type fullname="MVZ2.Almanacs.ContraptionAlmanacPage" preserve="all" />
+    <type fullname="MVZ2.Almanacs.IndexAlmanacPage" preserve="all" />
+    <type fullname="MVZ2.Almanacs.MiscAlmanacPage" preserve="all" />
+    <type fullname="MVZ2.Animation.AnimationParticlePlayer" preserve="all" />
+    <type fullname="MVZ2.Animation.AutoDisableStateBehaviour" preserve="all" />
+    <type fullname="MVZ2.Animation.ReadySetBuildBehaviour" preserve="all" />
+    <type fullname="MVZ2.Arcade.ArcadeCategoryItem" preserve="all" />
+    <type fullname="MVZ2.Arcade.ArcadeController" preserve="all" />
+    <type fullname="MVZ2.Arcade.ArcadeItem" preserve="all" />
+    <type fullname="MVZ2.Arcade.ArcadeItemsPage" preserve="all" />
+    <type fullname="MVZ2.Arcade.ArcadeUI" preserve="all" />
+    <type fullname="MVZ2.Arcade.IndexArcadePage" preserve="all" />
+    <type fullname="MVZ2.Archives.ArchiveController" preserve="all" />
+    <type fullname="MVZ2.Archives.ArchiveDetailsSection" preserve="all" />
+    <type fullname="MVZ2.Archives.ArchiveTagItem" preserve="all" />
+    <type fullname="MVZ2.Archives.ArchiveTalkItem" preserve="all" />
+    <type fullname="MVZ2.Archives.ArchiveUI" preserve="all" />
+    <type fullname="MVZ2.Archives.DetailsArchivePage" preserve="all" />
+    <type fullname="MVZ2.Archives.IndexArchivePage" preserve="all" />
+    <type fullname="MVZ2.Archives.SimulationArchivePage" preserve="all" />
+    <type fullname="MVZ2.Audios.MusicManager" preserve="all" />
+    <type fullname="MVZ2.Audios.SoundManager" preserve="all" />
+    <type fullname="MVZ2.Audios.SoundPlayer" preserve="all" />
+    <type fullname="MVZ2.Audios.SoundSource" preserve="all" />
+    <type fullname="MVZ2.Blueprints.Blueprint" preserve="all" />
+    <type fullname="MVZ2.Blueprints.BlueprintDisplayerMobile" preserve="all" />
+    <type fullname="MVZ2.Blueprints.BlueprintDisplayerStandalone" preserve="all" />
+    <type fullname="MVZ2.Blueprints.BlueprintDisplayerStandalonePage" preserve="all" />
+    <type fullname="MVZ2.Blueprints.CommandBlockSlot" preserve="all" />
+    <type fullname="MVZ2.Cameras.ResolutionManager" preserve="all" />
+    <type fullname="MVZ2.ChapterTransitions.ChapterTransition" preserve="all" />
+    <type fullname="MVZ2.ChapterTransitions.ChapterTransitionBlurer" preserve="all" />
+    <type fullname="MVZ2.ChapterTransitions.ChapterTransitionController" preserve="all" />
+    <type fullname="MVZ2.Collisions.UnityCollisionEntity" preserve="all" />
+    <type fullname="MVZ2.Collisions.UnityCollisionSystem" preserve="all" />
+    <type fullname="MVZ2.Collisions.UnityEntityCollider" preserve="all" />
+    <type fullname="MVZ2.Credits.CreditsCategory" preserve="all" />
+    <type fullname="MVZ2.Credits.CreditsEntry" preserve="all" />
+    <type fullname="MVZ2.Credits.CreditsPage" preserve="all" />
+    <type fullname="MVZ2.Cursors.CursorManager" preserve="all" />
+    <type fullname="MVZ2.Customize.CustomizeController" preserve="all" />
+    <type fullname="MVZ2.Customize.CustomizeIndexButton" preserve="all" />
+    <type fullname="MVZ2.Customize.CustomizeUI" preserve="all" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleAutoCompleteItem" preserve="all" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleController" preserve="all" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleInputField" preserve="all" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleUI" preserve="all" />
+    <type fullname="MVZ2.Debugs.DebugManager" preserve="all" />
+    <type fullname="MVZ2.Grids.GridController" preserve="all" />
+    <type fullname="MVZ2.Grids.GridLayoutController" preserve="all" />
+    <type fullname="MVZ2.Grids.GridView" preserve="all" />
+    <type fullname="MVZ2.Grids.LaneController" preserve="all" />
+    <type fullname="MVZ2.Inputs.InputManager" preserve="all" />
+    <type fullname="MVZ2.Inputs.ReleaseInputCaller" preserve="all" />
+    <type fullname="MVZ2.IO.FileManager" preserve="all" />
+    <type fullname="MVZ2.Keybinding.KeybindingItem" preserve="all" />
+    <type fullname="MVZ2.Keybinding.KeybindingPage" preserve="all" />
+    <type fullname="MVZ2.Level.Artifacts.ArtifactChoosingDialog" preserve="all" />
+    <type fullname="MVZ2.Level.Artifacts.ArtifactItemUI" preserve="all" />
+    <type fullname="MVZ2.Level.Artifacts.ArtifactSelectItem" preserve="all" />
+    <type fullname="MVZ2.Level.Artifacts.ArtifactShaderController" preserve="all" />
+    <type fullname="MVZ2.Level.Artifacts.ArtifactSlot" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.BlueprintArray" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.BlueprintChoosePanel" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.BlueprintList" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.ChosenBlueprintController" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.ClassicBlueprintController" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.CommandBlockChoosePanel" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.Conveyor" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.ConveyorBlueprintController" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.LevelUIBlueprintChoose" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.LevelUIBlueprints" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.MovingBlueprint" preserve="all" />
+    <type fullname="MVZ2.Level.Blueprints.MovingBlueprintList" preserve="all" />
+    <type fullname="MVZ2.Level.Curses.CurseChoosingDialog" preserve="all" />
+    <type fullname="MVZ2.Level.Curses.CursePanelEntranceButton" preserve="all" />
+    <type fullname="MVZ2.Level.Curses.CurseSelectItem" preserve="all" />
+    <type fullname="MVZ2.Level.Dialogs.GameOverDialog" preserve="all" />
+    <type fullname="MVZ2.Level.Dialogs.LevelErrorLoadingDialog" preserve="all" />
+    <type fullname="MVZ2.Level.Dialogs.LevelLoadedDialog" preserve="all" />
+    <type fullname="MVZ2.Level.Dialogs.PauseDialog" preserve="all" />
+    <type fullname="MVZ2.Level.Entities.EntityController" preserve="all" />
+    <type fullname="MVZ2.Level.Entities.HeightIndicatorController" preserve="all" />
+    <type fullname="MVZ2.Level.Entities.ShadowController" preserve="all" />
+    <type fullname="MVZ2.Level.HeldItems.HeldItem" preserve="all" />
+    <type fullname="MVZ2.Level.HPBar.HPBar" preserve="all" />
+    <type fullname="MVZ2.Level.HPBar.HPBarCanvasController" preserve="all" />
+    <type fullname="MVZ2.Level.HPBar.HPBarList" preserve="all" />
+    <type fullname="MVZ2.Level.Inputing.LawnRaycastReceiver" preserve="all" />
+    <type fullname="MVZ2.Level.Inputing.LevelPointerInteractionHandler" preserve="all" />
+    <type fullname="MVZ2.Level.Inputing.LevelRaycaster" preserve="all" />
+    <type fullname="MVZ2.Level.LevelBlueprintChooseController" preserve="all" />
+    <type fullname="MVZ2.Level.LevelBlueprintController" preserve="all" />
+    <type fullname="MVZ2.Level.LevelCamera" preserve="all" />
+    <type fullname="MVZ2.Level.LevelController" preserve="all" />
+    <type fullname="MVZ2.Level.LevelManager" preserve="all" />
+    <type fullname="MVZ2.Level.Starshards.StarshardPanel" preserve="all" />
+    <type fullname="MVZ2.Level.Starshards.StarshardPanelIcon" preserve="all" />
+    <type fullname="MVZ2.Level.Starshards.StarshardPanelPoint" preserve="all" />
+    <type fullname="MVZ2.Level.UI.EnergyPanel" preserve="all" />
+    <type fullname="MVZ2.Level.UI.HeldTargetBubble" preserve="all" />
+    <type fullname="MVZ2.Level.UI.HintArrow" preserve="all" />
+    <type fullname="MVZ2.Level.UI.LevelCurseIcon" preserve="all" />
+    <type fullname="MVZ2.Level.UI.LevelUI" preserve="all" />
+    <type fullname="MVZ2.Level.UI.LevelUIPreset" preserve="all" />
+    <type fullname="MVZ2.Level.UI.PickaxeSlot" preserve="all" />
+    <type fullname="MVZ2.Level.UI.ProgressBar" preserve="all" />
+    <type fullname="MVZ2.Level.UI.ProgressBarBanner" preserve="all" />
+    <type fullname="MVZ2.Level.UI.TriggerSlot" preserve="all" />
+    <type fullname="MVZ2.Localization.LanguageManager" preserve="all" />
+    <type fullname="MVZ2.Localization.TextMeshProTranslator" preserve="all" />
+    <type fullname="MVZ2.Localization.TextMeshProUGUITranslator" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.AchievementEntryUI" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.AchievementsUI" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.MainmenuButton" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.MainmenuController" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.MainmenuUI" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.StatCategoryUI" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.StatDirectEntryUI" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.StatEntryUI" preserve="all" />
+    <type fullname="MVZ2.Mainmenu.StatsUI" preserve="all" />
+    <type fullname="MVZ2.Managers.CoroutineManager" preserve="all" />
+    <type fullname="MVZ2.Managers.FontManager" preserve="all" />
+    <type fullname="MVZ2.Managers.GameSettings" preserve="all" />
+    <type fullname="MVZ2.Managers.MainManager" preserve="all" />
+    <type fullname="MVZ2.Managers.PerformanceManager" preserve="all" />
+    <type fullname="MVZ2.Managers.ResourceManager" preserve="all" />
+    <type fullname="MVZ2.Managers.ShakeManager" preserve="all" />
+    <type fullname="MVZ2.Managers.TalkManager" preserve="all" />
+    <type fullname="MVZ2.Map.MapButton" preserve="all" />
+    <type fullname="MVZ2.Map.MapController" preserve="all" />
+    <type fullname="MVZ2.Map.MapElement" preserve="all" />
+    <type fullname="MVZ2.Map.MapElementButton" preserve="all" />
+    <type fullname="MVZ2.Map.MapModel" preserve="all" />
+    <type fullname="MVZ2.Map.MapUI" preserve="all" />
+    <type fullname="MVZ2.Modding.ModManager" preserve="all" />
+    <type fullname="MVZ2.Models.AreaModel" preserve="all" />
+    <type fullname="MVZ2.Models.AreaModelPreset" preserve="all" />
+    <type fullname="MVZ2.Models.EntityModel" preserve="all" />
+    <type fullname="MVZ2.Models.GraphicsManager" preserve="all" />
+    <type fullname="MVZ2.Models.ModelBone" preserve="all" />
+    <type fullname="MVZ2.Models.ModelManager" preserve="all" />
+    <type fullname="MVZ2.Models.ModelUpdater" preserve="all" />
+    <type fullname="MVZ2.Models.UIModel" preserve="all" />
+    <type fullname="MVZ2.MusicRoom.MusicBar" preserve="all" />
+    <type fullname="MVZ2.MusicRoom.MusicRoomController" preserve="all" />
+    <type fullname="MVZ2.MusicRoom.MusicRoomListItem" preserve="all" />
+    <type fullname="MVZ2.MusicRoom.MusicRoomUI" preserve="all" />
+    <type fullname="MVZ2.NotePaper.NoteController" preserve="all" />
+    <type fullname="MVZ2.NotePaper.NoteUI" preserve="all" />
+    <type fullname="MVZ2.Options.OptionsDialogController" preserve="all" />
+    <type fullname="MVZ2.Options.OptionsManager" preserve="all" />
+    <type fullname="MVZ2.Rendering.CameraLimiter" preserve="all" />
+    <type fullname="MVZ2.Rendering.RenderDowngrade" preserve="all" />
+    <type fullname="MVZ2.ResourcePacks.ResourcePackManager" preserve="all" />
+    <type fullname="MVZ2.Saves.SaveManager" preserve="all" />
+    <type fullname="MVZ2.Scenes.AchievementHint" preserve="all" />
+    <type fullname="MVZ2.Scenes.AchievementHintController" preserve="all" />
+    <type fullname="MVZ2.Scenes.CreditsController" preserve="all" />
+    <type fullname="MVZ2.Scenes.DebugConsoleIcon" preserve="all" />
+    <type fullname="MVZ2.Scenes.DeleteUserDialogController" preserve="all" />
+    <type fullname="MVZ2.Scenes.GameEntrance" preserve="all" />
+    <type fullname="MVZ2.Scenes.GameUpdater" preserve="all" />
+    <type fullname="MVZ2.Scenes.HealthWarningController" preserve="all" />
+    <type fullname="MVZ2.Scenes.HealthWarningRaycastReceiver" preserve="all" />
+    <type fullname="MVZ2.Scenes.InputNameDialogController" preserve="all" />
+    <type fullname="MVZ2.Scenes.KeybindingController" preserve="all" />
+    <type fullname="MVZ2.Scenes.MainSceneController" preserve="all" />
+    <type fullname="MVZ2.Scenes.MainSceneUI" preserve="all" />
+    <type fullname="MVZ2.Scenes.PopupController" preserve="all" />
+    <type fullname="MVZ2.Scenes.PortalController" preserve="all" />
+    <type fullname="MVZ2.Scenes.SceneLoadingManager" preserve="all" />
+    <type fullname="MVZ2.Scenes.SplashController" preserve="all" />
+    <type fullname="MVZ2.Sprites.GeneratedResourceManifest" preserve="all" />
+    <type fullname="MVZ2.Sprites.SpriteManifest" preserve="all" />
+    <type fullname="MVZ2.Store.StoreController" preserve="all" />
+    <type fullname="MVZ2.Store.StoreManager" preserve="all" />
+    <type fullname="MVZ2.Store.StoreProductItem" preserve="all" />
+    <type fullname="MVZ2.Store.StoreUI" preserve="all" />
+    <type fullname="MVZ2.Supporters.SponsorManager" preserve="all" />
+    <type fullname="MVZ2.Talk.CharacterPortraitComponent" preserve="all" />
+    <type fullname="MVZ2.Talk.CharacterPortraitComponentLayer" preserve="all" />
+    <type fullname="MVZ2.Talk.TalkCharacterController" preserve="all" />
+    <type fullname="MVZ2.Talk.TalkController" preserve="all" />
+    <type fullname="MVZ2.Titlescreen.TitlescreenController" preserve="all" />
+    <type fullname="MVZ2.Titlescreen.TitlescreenUI" preserve="all" />
+    <type fullname="MVZ2.UI.ButtonRow" preserve="all" />
+    <type fullname="MVZ2.UI.ColorFader" preserve="all" />
+    <type fullname="MVZ2.UI.CursorHandler" preserve="all" />
+    <type fullname="MVZ2.UI.CustomDialog" preserve="all" />
+    <type fullname="MVZ2.UI.DeleteUserDialog" preserve="all" />
+    <type fullname="MVZ2.UI.Deselector" preserve="all" />
+    <type fullname="MVZ2.UI.DragMover" preserve="all" />
+    <type fullname="MVZ2.UI.FloatFader" preserve="all" />
+    <type fullname="MVZ2.UI.FPSDisplayer" preserve="all" />
+    <type fullname="MVZ2.UI.InputNameDialog" preserve="all" />
+    <type fullname="MVZ2.UI.LabeledDropdown" preserve="all" />
+    <type fullname="MVZ2.UI.LabeledToggle" preserve="all" />
+    <type fullname="MVZ2.UI.LanguageDialog" preserve="all" />
+    <type fullname="MVZ2.UI.LayoutSizeLimiter" preserve="all" />
+    <type fullname="MVZ2.UI.MoneyPanel" preserve="all" />
+    <type fullname="MVZ2.UI.MoreOptionsCategory" preserve="all" />
+    <type fullname="MVZ2.UI.OptionsDialog" preserve="all" />
+    <type fullname="MVZ2.UI.OptionsDialogMainPage" preserve="all" />
+    <type fullname="MVZ2.UI.OptionsDialogMoreOptionsPage" preserve="all" />
+    <type fullname="MVZ2.UI.OptionWidgets" preserve="all" />
+    <type fullname="MVZ2.UI.PanZoomController" preserve="all" />
+    <type fullname="MVZ2.UI.QuestionMark" preserve="all" />
+    <type fullname="MVZ2.UI.RaycastReceiver" preserve="all" />
+    <type fullname="MVZ2.UI.SliderEndHandler" preserve="all" />
+    <type fullname="MVZ2.UI.Talk.SpeechBubble" preserve="all" />
+    <type fullname="MVZ2.UI.Talk.TalkCharacterUI" preserve="all" />
+    <type fullname="MVZ2.UI.Talk.TalkItem" preserve="all" />
+    <type fullname="MVZ2.UI.Talk.TalkUI" preserve="all" />
+    <type fullname="MVZ2.UI.TextButton" preserve="all" />
+    <type fullname="MVZ2.UI.TextSlider" preserve="all" />
+    <type fullname="MVZ2.UI.Tooltip" preserve="all" />
+    <type fullname="MVZ2.UI.TooltipAnchor" preserve="all" />
+    <type fullname="MVZ2.UI.TooltipHandler" preserve="all" />
+    <type fullname="MVZ2.UI.UserManageDialog" preserve="all" />
+    <type fullname="MVZ2.UI.UserManageItem" preserve="all" />
+    <type fullname="MVZ2.UI.UserManageList" preserve="all" />
+    <type fullname="MVZ2.UI.Vector2Fader" preserve="all" />
+    <type fullname="MVZ2.Cursors.CursorData" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.Managers.PerformanceData" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.Supporters.SponsorManager/PlanEntry" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.Sprites.SpriteEntry" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.Sprites.TextureEntry" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.Animation.ParticlePair" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.SortingLayerPicker" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleInputField/OnChangeEvent" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleInputField/SelectionEvent" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleInputField/SubmitEvent" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleInputField/TextSelectionEvent" preserve="nothing" serialized="true" />
+    <type fullname="MVZ2.DebugConsole.DebugConsoleInputField/TouchScreenKeyboardEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="MVZ2.Logic, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="MVZ2Logic.Models.Components.AnimationGameObjectToggler" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.AnimationRotator" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.AnimationSpriteSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.CircleFillSpriteSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ColorOffsetSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.DamagePercentGameObjectActivator" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.DamagePercentSpriteSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.FireTimeRunner" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.HSVOffsetSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.LineModel" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.LineRendererPointLocker" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.LocalSpriteRectSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.MobileColliderExpander" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ModelPropertyGameObjectActivatorBoolean" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ModelPropertyGameObjectActivatorInt" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ModelPropertySpriteSetterBoolean" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ModelPropertySpriteSetterInt" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ModelPropertySpriteSetterReference" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.ShaderVectorSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.SpriteSizeFitter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Components.TrailController" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.AnimatorElement" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.ImageElement" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.LightController" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.ParticlePlayer" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.RendererElement" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.SortingGroupElement" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.SpriteMaskController" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Elements.TransformElement" preserve="all" />
+    <type fullname="MVZ2Logic.Models.ModelAnchor" preserve="all" />
+    <type fullname="MVZ2Logic.Models.ModelGroupArea" preserve="all" />
+    <type fullname="MVZ2Logic.Models.ModelGroupEntity" preserve="all" />
+    <type fullname="MVZ2Logic.Models.ModelGroupUI" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Widgets.AnimationImageSetter" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Widgets.AnimatorSoundPlayer" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Widgets.LightningGenerator" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Widgets.PositionLocker" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Widgets.RotationLocker" preserve="all" />
+    <type fullname="MVZ2Logic.UI.ImageResolver" preserve="all" />
+    <type fullname="MVZ2Logic.UI.MeshRendererResolver" preserve="all" />
+    <type fullname="MVZ2Logic.UI.ParticleRendererResolver" preserve="all" />
+    <type fullname="MVZ2Logic.UI.SpriteRendererResolver" preserve="all" />
+    <type fullname="MVZ2Logic.Models.Widgets.AnimatorSoundPlayerItem" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="MVZ2.Vanilla, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="MVZ2.GameContent.Customize.TeleporterTeamBlueprintDisplayerUI" preserve="all" />
+    <type fullname="MVZ2.GameContent.Customize.TeleporterTeamController" preserve="all" />
+    <type fullname="MVZ2.GameContent.Customize.TeleporterTeamLayoutTileUI" preserve="all" />
+    <type fullname="MVZ2.GameContent.Customize.TeleporterTeamLayoutUI" preserve="all" />
+    <type fullname="MVZ2.GameContent.Customize.TeleporterTeamUI" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.ArtifactPickupModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.BlastSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.BlueprintPickupSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.BlueprintSprite" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.BreakoutBoardModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.CartChargeBarModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.CrushingWallsModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.CrushingWallsModelPlatform" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.DivineShieldModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.ElectricArcModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.ExplosionSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.FallenLeavesWindSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.FloatingTextModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.FragmentColorSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.FragmentEmitter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.FrankensteinModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.GasBurnSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.GasSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.GiantBowlModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.HookshotChainsModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.KnockbackWaveModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.MagichestModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.MagneticLineModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.MonsterSpawnerModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareaperModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareaperTimerModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareDarknessModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareEye" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareGlassModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareSkyAnimator" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NightmareWatchingEyeModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.NyanCatModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.ParticleSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.PoolAnimator" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.PoolColorSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.SeijaBulletModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.SlendermanTentacle" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.SmokeSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.SpeedlineSizeSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.StarshardRotationSetter" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.StopParticlesModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.WitherArmor" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.WitherModel" preserve="all" />
+    <type fullname="MVZ2.GameContent.Models.WitherSkullModel" preserve="all" />
+  </assembly>
+  <assembly fullname="PVZEngine.Tools, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="PVZEngine.Tools.Unity.ElementArray" preserve="all" />
+    <type fullname="PVZEngine.Tools.Unity.ElementList" preserve="all" />
+    <type fullname="PVZEngine.Tools.Unity.ElementListUI" preserve="all" />
+    <type fullname="PVZEngine.Tools.Unity.PositionMoverLinear" preserve="all" />
+    <type fullname="PVZEngine.Tools.Unity.PositionMoverParabola" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.AtlasSpriteProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.InstanceProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.LegacyResourcesProvider" preserve="all" />
+    <type fullname="UnityEngine.ResourceManagement.ResourceProviders.SceneProvider" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="TMPro.TextMeshPro" preserve="all" />
+    <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
+    <type fullname="TMPro.TMP_Dropdown" preserve="all" />
+    <type fullname="TMPro.TMP_FontAsset" preserve="all" />
+    <type fullname="TMPro.TMP_InputField" preserve="all" />
+    <type fullname="TMPro.FaceInfo_Legacy" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.FontAssetCreationSettings" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.KerningTable" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_Character" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_Dropdown/DropdownEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_Dropdown/OptionData" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_Dropdown/OptionDataList" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_FontFeatureTable" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_FontWeightPair" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.VertexGradient" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/OnChangeEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/SelectionEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/SubmitEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/TextSelectionEvent" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_InputField/TouchScreenKeyboardEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEditor.Audio.AudioMixerSnapshotController" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.AnimationClip" preserve="all" />
+    <type fullname="UnityEngine.Animator" preserve="all" />
+    <type fullname="UnityEngine.AnimatorOverrideController" preserve="all" />
+    <type fullname="UnityEngine.RuntimeAnimatorController" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Audio.AudioMixer" preserve="all" />
+    <type fullname="UnityEngine.Audio.AudioMixerGroup" preserve="all" />
+    <type fullname="UnityEngine.AudioClip" preserve="all" />
+    <type fullname="UnityEngine.AudioDistortionFilter" preserve="all" />
+    <type fullname="UnityEngine.AudioListener" preserve="all" />
+    <type fullname="UnityEngine.AudioLowPassFilter" preserve="all" />
+    <type fullname="UnityEngine.AudioSource" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Camera" preserve="all" />
+    <type fullname="UnityEngine.CustomRenderTexture" preserve="all" />
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Light" preserve="all" />
+    <type fullname="UnityEngine.LightmapSettings" preserve="all" />
+    <type fullname="UnityEngine.LineRenderer" preserve="all" />
+    <type fullname="UnityEngine.Material" preserve="all" />
+    <type fullname="UnityEngine.Mesh" preserve="all" />
+    <type fullname="UnityEngine.MeshFilter" preserve="all" />
+    <type fullname="UnityEngine.MeshRenderer" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.Rendering.SortingGroup" preserve="all" />
+    <type fullname="UnityEngine.RenderSettings" preserve="all" />
+    <type fullname="UnityEngine.Shader" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
+    <type fullname="UnityEngine.SpriteRenderer" preserve="all" />
+    <type fullname="UnityEngine.TextAsset" preserve="all" />
+    <type fullname="UnityEngine.Texture2D" preserve="all" />
+    <type fullname="UnityEngine.Transform" preserve="all" />
+    <type fullname="UnityEngine.U2D.SpriteAtlas" preserve="all" />
+    <type fullname="UnityEngine.Events.ArgumentCache" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.PersistentCallGroup" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.PersistentListenerMode" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.RectOffset" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.ParticleSystem" preserve="all" />
+    <type fullname="UnityEngine.ParticleSystemRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.BoxCollider2D" preserve="all" />
+    <type fullname="UnityEngine.CapsuleCollider2D" preserve="all" />
+    <type fullname="UnityEngine.CircleCollider2D" preserve="all" />
+    <type fullname="UnityEngine.PolygonCollider2D" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.BoxCollider" preserve="all" />
+    <type fullname="UnityEngine.Rigidbody" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.SpriteMaskModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.SpriteMask" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Font" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.Physics2DRaycaster" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.StandaloneInputModule" preserve="all" />
+    <type fullname="UnityEngine.UI.AspectRatioFitter" preserve="all" />
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.CanvasScaler" preserve="all" />
+    <type fullname="UnityEngine.UI.ContentSizeFitter" preserve="all" />
+    <type fullname="UnityEngine.UI.GraphicRaycaster" preserve="all" />
+    <type fullname="UnityEngine.UI.GridLayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.HorizontalLayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.Image" preserve="all" />
+    <type fullname="UnityEngine.UI.LayoutElement" preserve="all" />
+    <type fullname="UnityEngine.UI.Mask" preserve="all" />
+    <type fullname="UnityEngine.UI.Outline" preserve="all" />
+    <type fullname="UnityEngine.UI.RawImage" preserve="all" />
+    <type fullname="UnityEngine.UI.RectMask2D" preserve="all" />
+    <type fullname="UnityEngine.UI.Scrollbar" preserve="all" />
+    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
+    <type fullname="UnityEngine.UI.Shadow" preserve="all" />
+    <type fullname="UnityEngine.UI.Slider" preserve="all" />
+    <type fullname="UnityEngine.UI.Toggle" preserve="all" />
+    <type fullname="UnityEngine.UI.ToggleGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.VerticalLayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.AnimationTriggers" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.ColorBlock" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.MaskableGraphic/CullStateChangedEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Navigation" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.ScrollRect/ScrollRectEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Scrollbar/ScrollEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.SpriteState" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.UI.Slider/SliderEvent" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Canvas" preserve="all" />
+    <type fullname="UnityEngine.CanvasGroup" preserve="all" />
+    <type fullname="UnityEngine.CanvasRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="PVZEngine.Base">
+    <type fullname="PVZEngine.NamespaceIDReference" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="UnityEngine.TextCoreFontEngineModule">
+    <type fullname="UnityEngine.TextCore.FaceInfo" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.Glyph" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.GlyphMetrics" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.TextCore.GlyphRect" preserve="nothing" serialized="true" />
+  </assembly>
+</linker>

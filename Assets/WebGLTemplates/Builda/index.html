@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>{{{ PRODUCT_NAME }}}</title>
+    <!-- Builda SDK 注入契约（h5_bundle_spec.md §2.1）：必须以根相对路径引用，zip 不打包该文件。
+         正式运行由宿主注入，本地调试由 builda dev 提供 mock 版。上传校验硬查此引用，勿删改。 -->
+    <script src="builda-sdk.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+      }
+      #unity-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+    <script>
+      var config = {
+        dataUrl: "Build/{{{ DATA_FILENAME }}}",
+        frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: "Build/{{{ CODE_FILENAME }}}",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+      };
+      // 宿主可用 ?dpr=N 控制渲染分辨率（移动端性能口径，见 skill 的移动端性能章节）
+      var dpr = parseFloat(new URLSearchParams(location.search).get("dpr"));
+      if (dpr > 0) {
+        config.devicePixelRatio = dpr;
+      }
+      createUnityInstance(document.querySelector("#unity-canvas"), config).catch(function (message) {
+        console.error(message);
+      });
+    </script>
+  </body>
+</html>
