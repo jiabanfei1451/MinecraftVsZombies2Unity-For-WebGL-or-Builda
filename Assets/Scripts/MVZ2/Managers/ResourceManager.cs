@@ -324,50 +324,52 @@ namespace MVZ2.Managers
         {
             if (locations == null)
                 return Array.Empty<(NamespaceID key, T resource)>();
-            List<(NamespaceID key, T resource)> loaded = new List<(NamespaceID key, T resource)>();
-            int loadedCount = 0;
-            int maxConcurrency = Mathf.Max(3, locations.Count / 10);
-            int yieldCounter = 0;
-            int maxYieldCount = maxConcurrency;
 
-            var sem = new SemaphoreSlim(maxConcurrency);
-            List<Task> tasks = new List<Task>();
+            // ===== Builda/WebGL 改造（完全顺序加载）=====
+            // 原实现用 SemaphoreSlim + ContinueWith(TaskScheduler.FromCurrentSynchronizationContext())。
+            // WebGL 是单线程、没有线程池的环境：
+            //   1. ContinueWith 指定的调度器永不执行 -> sem.Release() 永不调用
+            //   2. 信号量耗尽后 await sem.WaitAsync() 永久挂起 -> 表现为"卡在加载"
+            //   3. await Task.Yield() 在 WebGL 下也会触发 RuntimeError
+            // 这里改为：一次只发起一个请求，直接 await handle.Task，
+            // 全程不用信号量、不用 ContinueWith、不用 Task.Yield。
+            var loaded = new List<(NamespaceID key, T resource)>(locations.Count);
+            int total = locations.Count;
+            int index = 0;
+
             foreach (var loc in locations)
             {
-                await sem.WaitAsync();  // 等可用 slot
-                var handle = Addressables.LoadAssetAsync<T>(loc);
-                progress?.SetCurrentTaskName($"Loading {loc.PrimaryKey}");
-                handle.Completed += (handle) =>
-                {
-                    var resID = NamespaceID.Parse(loc.PrimaryKey, Main.BuiltinNamespace);
-                    try
-                    {
-                        var res = handle.Result;
-                        loaded.Add((resID, res));
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError($"资源（{typeof(T[]).Name}）{resID}加载失败：{e}");
-                    }
-                    loadedCount++;
-                    progress?.SetProgress(loadedCount / (float)locations.Count);
-                };
+                index++;
+                if (loc == null)
+                    continue;
 
-                // 当单个 handle 完成后，释放信号量
-                tasks.Add(handle.Task.ContinueWith(t =>
+                NamespaceID resID;
+                try
                 {
-                    sem.Release();
-                    if (t.IsFaulted)
-                        Debug.LogError($"加载失败：{loc}: {t.Exception}");
-                }, TaskScheduler.FromCurrentSynchronizationContext()));
-                yieldCounter++;
-                if (yieldCounter > maxYieldCount)
-                {
-                    yieldCounter = 0;
-                    await Task.Yield();
+                    resID = NamespaceID.Parse(loc.PrimaryKey, Main.BuiltinNamespace);
                 }
+                catch (Exception e)
+                {
+                    continue;
+                }
+
+                progress?.SetCurrentTaskName($"Loading {loc.PrimaryKey}");
+
+                try
+                {
+                    var handle = Addressables.LoadAssetAsync<T>(loc);
+                    var res = await handle.Task;
+                    if (res != null)
+                        loaded.Add((resID, res));
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"资源加载失败 {resID}: {e}");
+                }
+
+                progress?.SetProgress(index / (float)total);
             }
-            await Task.WhenAll(tasks);
+
             progress?.SetProgress(1, "Finished");
             return loaded.ToArray();
         }

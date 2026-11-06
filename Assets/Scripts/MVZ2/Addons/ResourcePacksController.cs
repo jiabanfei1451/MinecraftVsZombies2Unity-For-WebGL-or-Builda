@@ -278,6 +278,9 @@ namespace MVZ2.Addons
         }
         private void OnTutorialLinkClickCallback()
         {
+            // 已移除外部教程链接，未配置时不做任何事（避免打开空地址）。
+            if (string.IsNullOrEmpty(tutorialURL))
+                return;
             Application.OpenURL(tutorialURL);
         }
         #endregion
@@ -357,6 +360,12 @@ namespace MVZ2.Addons
         }
         private void UpdateTutorialLink()
         {
+            // 已移除外部教程链接：没有配置时把链接文字清空，界面上不显示任何 URL。
+            if (string.IsNullOrEmpty(tutorialURL))
+            {
+                ui.SetTutorialLinkText(string.Empty);
+                return;
+            }
             var text = Main.LanguageManager._(TUTORIAL_LINK_TEXT, tutorialURL);
             ui.SetTutorialLinkText(text);
         }

@@ -18,6 +18,8 @@ namespace MVZ2.IO
             {
                 SerializeHelper.WriteCompressedStringFile(path, content);
             }
+            // Builda/WebGL：写入后同步到浏览器 IndexedDB，否则刷新页面存档丢失
+            SaveSync.Sync();
         }
         public string ReadStringFile(string path)
         {

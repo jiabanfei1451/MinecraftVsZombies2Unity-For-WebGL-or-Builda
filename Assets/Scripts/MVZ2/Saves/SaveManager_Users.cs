@@ -140,6 +140,8 @@ namespace MVZ2.Saves
             var serializable = userDataList.ToSerializable();
             var metaJson = serializable.ToBson();
             Main.FileManager.WriteStringFile(saveDataMetaPath, metaJson);
+            // 用户列表也要同步到云端，否则换设备后看不到原有存档
+            CloudSaveManager.QueuePush(saveDataMetaPath, GetSaveDataRoot());
         }
         #endregion
 

@@ -9,6 +9,8 @@ namespace MVZ2.UI
 {
     public class InputNameDialog : Dialog
     {
+        public TMP_InputField InputField => inputField;
+
         public void SetErrorMessage(string error)
         {
             errorMessage.text = error;
@@ -21,7 +23,17 @@ namespace MVZ2.UI
         {
             confirmButton.onClick.AddListener(() => OnConfirm?.Invoke(inputField.text));
             cancelButton.onClick.AddListener(() => OnCancel?.Invoke());
+            // Builda/WebGL：玩家点击输入框时请求平台原生输入面板。
+            // 不能一弹框就抢焦点拉起面板，那样玩家看不到对话框本体，也不知道发生了什么。
+            if (inputField != null)
+                inputField.onSelect.AddListener(OnInputFieldSelected);
         }
+        private void OnInputFieldSelected(string _)
+        {
+            OnRequestPlatformInput?.Invoke();
+        }
+        /// <summary>玩家点击输入框时触发，由控制器决定是否拉起平台面板。</summary>
+        public event Action? OnRequestPlatformInput;
         public event Action<string>? OnConfirm;
         public event Action? OnCancel;
         [SerializeField]

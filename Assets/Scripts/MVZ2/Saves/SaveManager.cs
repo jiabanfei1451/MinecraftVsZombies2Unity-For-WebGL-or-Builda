@@ -102,6 +102,8 @@ namespace MVZ2.Saves
                         Log.LogError($"存档文件{destPath}写入失败: {e}");
                     }
                 }
+                // 文件已就位，同步到云端（失败不影响本地存档）
+                CloudSaveManager.QueuePush(destPath, GetSaveDataRoot());
             }
         }
         private void CycleSaveDataBackups(int userIndex, string spaceName)

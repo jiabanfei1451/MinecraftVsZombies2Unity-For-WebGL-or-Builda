@@ -24,7 +24,8 @@ namespace MVZ2.ResourcePacks
         {
             try
             {
-                var packReadData = await UniTask.RunOnThreadPool(() => ReadPackData(loader, key));
+                // Builda/WebGL：WebGL 没有线程池，RunOnThreadPool 的任务永不完成。
+                var packReadData = await ReadPackData(loader, key);
                 if (packReadData == null)
                     return null;
                 var pack = new ResourcePack(key, loader.FileName);

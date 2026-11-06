@@ -22,13 +22,16 @@ namespace MVZ2.IO
             }
         }
 
-        public static async Task<string> ReadStringAsync(this ZipArchiveEntry entry, Encoding encoding)
+        public static Task<string> ReadStringAsync(this ZipArchiveEntry entry, Encoding encoding)
         {
+            // Builda/WebGL 改造：改为同步读取。
+            // StreamReader.ReadToEndAsync() 的 continuation 依赖线程池，
+            // WebGL 没有线程池，await 之后永不返回（表现为永久挂起）。
             using (var zipStream = entry.Open())
             {
                 using (var reader = new StreamReader(zipStream, encoding))
                 {
-                    return await reader.ReadToEndAsync();
+                    return Task.FromResult(reader.ReadToEnd());
                 }
             }
         }
@@ -65,17 +68,10 @@ namespace MVZ2.IO
                 }
             }
         }
-        public static async Task<Catalog> ReadCatalogAsync(this ZipArchiveEntry entry, string language)
+public static Task<Catalog> ReadCatalogAsync(this ZipArchiveEntry entry, string language)
         {
-            using var zipStream = entry.Open();
-            {
-                using var memory = new MemoryStream();
-                {
-                    await zipStream.CopyToAsync(memory);
-                    memory.Seek(0, SeekOrigin.Begin);
-                    return new Catalog(memory, new CultureInfo(language));
-                }
-            }
+            // Builda/WebGL：同步读取（CopyToAsync 依赖线程池，WebGL 下永不返回）
+            return Task.FromResult(entry.ReadCatalog(language));
         }
         public static byte[] ReadBytes(this ZipArchiveEntry entry)
         {
@@ -88,16 +84,10 @@ namespace MVZ2.IO
                 }
             }
         }
-        public static async Task<byte[]> ReadBytesAsync(this ZipArchiveEntry entry)
+public static Task<byte[]> ReadBytesAsync(this ZipArchiveEntry entry)
         {
-            using (var entryStream = entry.Open())
-            {
-                using (var memory = new MemoryStream())
-                {
-                    await entryStream.CopyToAsync(memory);
-                    return memory.ToArray();
-                }
-            }
+            // Builda/WebGL：同步读取（CopyToAsync 依赖线程池，WebGL 下永不返回）
+            return Task.FromResult(entry.ReadBytes());
         }
     }
 }

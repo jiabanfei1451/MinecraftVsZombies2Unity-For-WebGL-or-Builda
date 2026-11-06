@@ -203,7 +203,8 @@ namespace MVZ2.Mainmenu
             main.Scene.ShowDialogSelect(title, desc, (value) =>
             {
                 if (value)
-                    Application.Quit();
+                    try { Builda.BuildaSDK.RuntimeQuit(r => { }); }
+                catch (System.Exception) { Application.Quit(); }
             });
         }
 

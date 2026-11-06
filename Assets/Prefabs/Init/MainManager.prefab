@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &452216348847813355
 GameObject:
@@ -1480,11 +1480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb605c52c00946248aee66f8f41e3413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userID: f8724bbc95c311eb8ebb52540025c377
-  apiToken: E8tzBAlOczyppT+Be0jpvR+JCvH2J3BY7aKhUtIQ5XOpHXwS1ffhok+AjwJidijI
-  baseUrl: https://afdian.com/api
-  sponsorQueryPath: /open/query-sponsor
-  responseTimeout: 10
   planEntries:
   - hash: 25afa204d56311ef9a3552540025c377
     type: 2

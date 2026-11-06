@@ -11,11 +11,78 @@ namespace MVZ2.DebugConsole
 {
     public class DebugConsoleController : MonoBehaviour
     {
+        /// <summary>
+        /// 打开 Builda 平台原生输入面板输入调试命令；不可用时返回 false 由调用方回落。
+        /// 手机端没有物理键盘，游戏内 TMP 输入框无法输入。
+        /// </summary>
+        private bool TryOpenPlatformInput()
+        {
+            if (platformInputOpening)
+                return true;
+            platformInputOpening = true;
+            try
+            {
+                var opts = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "placeholder", "输入指令" },
+                    { "defaultValue", ui.GetCommand() ?? string.Empty },
+                    { "maxLength", 256 },
+                };
+                Builda.BuildaSDK.Call("input.showInputPanel", new object[] { opts }, OnPlatformInputResult);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                platformInputOpening = false;
+                Debug.Log("[DebugConsole] 平台输入面板不可用，回落游戏内输入框：" + e.Message);
+                return false;
+            }
+        }
+        private void OnPlatformInputResult(Builda.BuildaResult r)
+        {
+            platformInputOpening = false;
+            if (!r.Ok)
+            {
+                Debug.Log("[DebugConsole] 平台输入面板返回失败，回落游戏内输入框");
+                ui.ActivateInputField();
+                return;
+            }
+            var map = r.DataMap;
+            bool confirmed = map != null && map.TryGetValue("confirmed", out var c) && c is bool cb && cb;
+            string text = map != null && map.TryGetValue("text", out var t) ? (t as string ?? string.Empty) : string.Empty;
+            if (!confirmed || string.IsNullOrWhiteSpace(text))
+            {
+                ui.ActivateInputField();
+                return;
+            }
+            // 回填到控制台输入框，由玩家按回车执行（保持和键盘输入一致的流程）
+            ui.SetCommand(text);
+            ui.MoveToCommandEnd(true);
+            ui.ActivateInputField();
+        }
+
         public void Show()
         {
             LoadCommandHistory();
             gameObject.SetActive(true);
+            // Builda/WebGL：先显示控制台本体，不抢焦点。
+            // 平台原生面板改为「玩家点击输入框」时才拉起（见 OnInputFieldSelectedCallback）。
+            SubscribePlatformInput();
             ui.ActivateInputField();
+        }
+        private void SubscribePlatformInput()
+        {
+            if (platformInputSubscribed)
+                return;
+            platformInputSubscribed = true;
+            ui.OnInputFieldFocus += OnInputFieldFocusCallback;
+        }
+        private void OnInputFieldFocusCallback(bool focused)
+        {
+            if (!focused)
+                return;
+            // 平台面板不可用时不做事，玩家继续用游戏内输入框（PC/有键盘时正常）
+            TryOpenPlatformInput();
         }
         public void Hide()
         {
@@ -448,6 +515,8 @@ namespace MVZ2.DebugConsole
         private int currentSuggestionViewStart = 0;
         private int suggestionIndex;
         private bool isAutoCompleteActive;
+        private bool platformInputOpening;
+        private bool platformInputSubscribed;
 
         private string? lastInput;
         private int lastCaret = -1;

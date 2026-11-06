@@ -13,6 +13,7 @@ using MVZ2Logic.Serialization;
 using PVZEngine;
 using PVZEngine.Tools.Unity;
 using UnityEngine;
+using MVZ2.Saves;
 
 namespace MVZ2.Options
 {
@@ -85,11 +86,17 @@ namespace MVZ2.Options
 
                 // 写入文件内容
                 SaveOptionsV1(writer);
+                writer.Flush();
             }
             catch (Exception e)
             {
                 Log.LogError($"保存设置文件失败：{e}");
             }
+            // Builda/WebGL：写入后同步到浏览器 IndexedDB，否则刷新页面设置丢失
+            // （表现为每次进入都提示选择语言，因为 IsLanguageInitialized 读不到文件）
+            MVZ2.IO.SaveSync.Sync();
+            // 同步到 Builda 云端（WebView 本地存储可能不持久，云端才是可靠副本）
+            CloudSaveManager.QueuePush(path);
         }
         public string GetOptionsFilePath()
         {

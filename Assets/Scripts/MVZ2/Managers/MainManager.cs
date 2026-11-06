@@ -90,6 +90,17 @@ namespace MVZ2.Managers
         }
         public TaskPipeline? GetLoadPipeline()
         {
+            // Builda/WebGL：InitLoad 里的 task.ContinueWith(...) 用默认调度器（线程池），
+            // WebGL 没有线程池，这个 continuation 可能永远不执行，
+            // 于是 loadPipeline 一直不为 null。标题画面的 Update 会一直走「加载中」分支，
+            // 进度条停住、按钮不可点 —— 表现就是「卡在加载」。
+            // 这里改成按 initTask 的完成状态主动清理，不依赖任何调度器。
+            if (loadPipeline != null && initTask != null && initTask.IsCompleted)
+            {
+                Debug.Log("[Init] 加载管线已完成，清理 loadPipeline/initTask");
+                loadPipeline = null;
+                initTask = null;
+            }
             return loadPipeline;
         }
         public Task? GetInitTask()
@@ -115,8 +126,15 @@ namespace MVZ2.Managers
 
             var task = loadPipeline.Run();
             initTask = task;
+            Debug.Log("[Init] 加载管线已启动");
+            // 注意：这里的 ContinueWith 用默认调度器（线程池），WebGL 下可能不执行。
+            // 真正的清理交给 GetLoadPipeline() 按 initTask.IsCompleted 判断，不要依赖这里。
             task.ContinueWith((t) =>
             {
+                if (t.IsFaulted)
+                    Debug.LogError("[Init] 加载管线异常：" + t.Exception);
+                else
+                    Debug.Log("[Init] 加载管线完成（continuation 执行）");
                 loadPipeline = null;
                 initTask = null;
             });
@@ -267,6 +285,14 @@ namespace MVZ2.Managers
             OptionsManager.LoadOptions();
 
             // 在MOD逻辑加载之后
+            // Builda 云存档：先从云端拉取（有更新的才覆盖本地），再走正常的本地加载流程。
+            // 云端的键名和 0.7.0 完全一致（mvz2_users / mvz2_u{index}.{mod} 等），可直接读到旧存档。
+            {
+                var modNamespaces = new List<string>();
+                foreach (var modInfo in ModManager.GetAllModInfos())
+                    modNamespaces.Add(modInfo.Namespace);
+                await CloudSaveManager.PullAllAsync(SaveManager.GetSaveDataRoot(), modNamespaces);
+            }
             SaveManager.Load();
             DebugManager.LoadCommandParameterSuggestions();
 

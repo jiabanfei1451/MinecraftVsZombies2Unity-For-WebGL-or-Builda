@@ -185,8 +185,11 @@ namespace MVZ2.Map
         }
         private void Update()
         {
-            UpdateTouchDatas();
-            if (Input.touchCount > 0)
+            // Builda/WebGL：触摸改用直接的拖动跟随实现。
+            // 原来的 touchDatas 字典 + delta 累积，在多指/快速抬手时会残留旧坐标，
+            // 表现为「点一个地方再点另一个地方画面会漂移」。这里改成记录上一帧手指位置，
+            // 每帧按世界坐标差值平移，不依赖 delta 字段。
+            if (Input.touchSupported && Input.touchCount > 0)
             {
                 UpdateTouch();
             }
@@ -401,36 +404,60 @@ namespace MVZ2.Map
         }
         private void UpdateTouch()
         {
-            if (touchDatas.Count > 1)
+            // ===== 双指捏合缩放 =====
+            if (Input.touchCount >= 2)
             {
-                var touch0 = touchDatas[0];
-                var touch1 = touchDatas[1];
-                var position0 = (Vector2)mapCamera.ScreenToWorldPoint(touch0.position);
-                var position1 = (Vector2)mapCamera.ScreenToWorldPoint(touch1.position);
-                var lastPosition0 = (Vector2)mapCamera.ScreenToWorldPoint(touch0.position - touch0.delta);
-                var lastPosition1 = (Vector2)mapCamera.ScreenToWorldPoint(touch1.position - touch1.delta);
+                touchDragging = false;
+                var t0 = Input.GetTouch(0);
+                var t1 = Input.GetTouch(1);
+                var w0 = (Vector2)mapCamera.ScreenToWorldPoint(t0.position);
+                var w1 = (Vector2)mapCamera.ScreenToWorldPoint(t1.position);
+                float dist = Vector2.Distance(w0, w1);
 
-                var lastLength = (lastPosition0 - lastPosition1).magnitude;
-                var currentLength = (position0 - position1).magnitude;
-                var scale = lastLength / currentLength;
-
-                var lastCenter = (lastPosition0 + lastPosition1) * 0.5f;
-                var currentCenter = (position0 + position1) * 0.5f;
-                var motion = lastCenter - currentCenter;
-
-                var maxCameraSize = mapMeta.size.y / 100 * 0.5f;
-                mapCamera.orthographicSize = Mathf.Clamp(mapCamera.orthographicSize * scale, minCameraSize, maxCameraSize);
-                mapCamera.transform.position += (Vector3)motion;
+                if (pinchPrevDist > 0.0001f && dist > 0.0001f)
+                {
+                    float ratio = pinchPrevDist / dist;
+                    var maxCameraSize = mapMeta.size.y / 100 * 0.5f;
+                    mapCamera.orthographicSize = Mathf.Clamp(
+                        mapCamera.orthographicSize * ratio, minCameraSize, maxCameraSize);
+                    LimitCameraPosition();
+                }
+                pinchPrevDist = dist;
+                return;
             }
-            else if (touchDatas.Count > 0)
+            pinchPrevDist = -1f;
+
+            // ===== 单指拖动平移（画面跟随手指）=====
+            var touch = Input.GetTouch(0);
+            switch (touch.phase)
             {
-                var touch0 = touchDatas[0];
-                var position0 = (Vector2)mapCamera.ScreenToWorldPoint(touch0.position);
-                var lastPosition0 = (Vector2)mapCamera.ScreenToWorldPoint(touch0.position - touch0.delta);
+                case TouchPhase.Began:
+                    if (!IsPositionOnBlockingUI(touch.position))
+                    {
+                        touchDragging = true;
+                        lastTouchPos = touch.position;
+                    }
+                    break;
 
-                var motion = lastPosition0 - position0;
+                case TouchPhase.Moved:
+                    if (touchDragging)
+                    {
+                        // 用「上一帧手指位置 → 当前手指位置」的世界坐标差值平移相机，
+                        // 这样画面严格跟随手指，不会因为跨帧残留而漂移。
+                        var cur = (Vector2)mapCamera.ScreenToWorldPoint(touch.position);
+                        var prev = (Vector2)mapCamera.ScreenToWorldPoint(lastTouchPos);
+                        var cameraPos = mapCamera.transform.position;
+                        cameraPos += (Vector3)(prev - cur);
+                        mapCamera.transform.position = cameraPos;
+                        lastTouchPos = touch.position;
+                        LimitCameraPosition();
+                    }
+                    break;
 
-                mapCamera.transform.position += (Vector3)motion;
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    touchDragging = false;
+                    break;
             }
         }
         private TouchData GetTouchData(int fingerId)
@@ -441,7 +468,10 @@ namespace MVZ2.Map
         {
             if (touch.phase == TouchPhase.Began)
             {
-                if (IsPositionOnReceiver(touch.position))
+                // Builda/WebGL：触摸拖动放宽判断。
+                // 原实现要求命中 raycastHitbox 或 MapElement，手机上空白区域完全拖不动。
+                // 改为：只要不是点在可交互的 UI（按钮/对话框）上就开始拖动。
+                if (!IsPositionOnBlockingUI(touch.position))
                 {
                     touchDatas.Add(new TouchData()
                     {
@@ -511,6 +541,37 @@ namespace MVZ2.Map
                 return;
             cameraScaleSpeed = Mathf.Clamp(cameraScaleSpeed + -scrollDelta.y * 0.1f, -1, 1);
         }
+        /// <summary>
+        /// 判断是否点在会拦截拖动的 UI 上（按钮、对话框等）。
+        /// 与 IsPositionOnReceiver 的区别：普通地图元素不算拦截，只有真正可交互的 UI 才算。
+        /// </summary>
+        private bool IsPositionOnBlockingUI(Vector2 position)
+        {
+            var eventSystem = EventSystem.current;
+            if (eventSystem == null)
+                return false;
+            var pointerEventData = new PointerEventData(eventSystem)
+            {
+                position = position
+            };
+            raycastResultCache.Clear();
+            eventSystem.RaycastAll(pointerEventData, raycastResultCache);
+            foreach (var result in raycastResultCache)
+            {
+                if (!result.gameObject)
+                    continue;
+                // 地图元素和触摸热区不算拦截
+                if (result.gameObject == raycastHitbox)
+                    continue;
+                if (result.gameObject.GetComponentInParent<MapElement>())
+                    continue;
+                // 有 Selectable / Button 才算真正的 UI 拦截
+                if (result.gameObject.GetComponentInParent<UnityEngine.UI.Selectable>())
+                    return true;
+            }
+            return false;
+        }
+
         private bool IsPositionOnReceiver(Vector2 position)
         {
             var eventSystem = EventSystem.current;
@@ -716,6 +777,9 @@ namespace MVZ2.Map
         private MapModel? model;
         private MapMeta mapMeta = null!;
         private bool draggingView;
+        private bool touchDragging;
+        private Vector2 lastTouchPos;
+        private float pinchPrevDist = -1f;
         private Vector2 mapDragStartPos;
         private float cameraScaleSpeed;
         private List<RaycastResult> raycastResultCache = new List<RaycastResult>();

@@ -12,21 +12,39 @@ namespace MVZ2.Scenes
     {
         public Task<string> Show(InputNameType type)
         {
-            ui.ResetPosition();
-            ui.ClearContent();
-            ui.SetErrorMessage(string.Empty);
             inputNameType = type;
-            gameObject.SetActive(true);
             if (tcs != null)
                 return tcs.Task;
             tcs = new TaskCompletionSource<string>();
+
+            // 先正常显示游戏内对话框（玩家能看到输入框和确认/取消按钮）。
+            // 平台原生面板改为「玩家点击输入框」时才拉起，见 OnRequestPlatformInputCallback。
+            SubscribePlatformInput();
+            ShowDialogInternal(string.Empty);
+            // 新玩家（没有存档）进游戏必须先起名，若玩家没输入就一直等下去，
+            // 表现就是「卡在加载」。这里给初始起名加超时兜底，超时后用默认名字继续，
+            // 玩家之后可以在「用户管理」里改名。
+            if (type == InputNameType.Initialize)
+                StartCoroutine(InitialNameFallbackTimeout(25f));
             return tcs.Task;
+        }
+        private void SubscribePlatformInput()
+        {
+            if (platformInputSubscribed || ui == null)
+                return;
+            platformInputSubscribed = true;
+            ui.OnRequestPlatformInput += OnRequestPlatformInputCallback;
+        }
+        private void OnRequestPlatformInputCallback()
+        {
+            var currentText = ui != null && ui.InputField != null ? (ui.InputField.text ?? string.Empty) : string.Empty;
+            // 平台面板不可用时什么都不做，玩家继续用游戏内输入框正常输入
+            TryOpenPlatformPanel(currentText);
         }
         public Task<string> ShowRename(int renameIndex)
         {
-            var task = Show(InputNameType.Rename);
             renamingUserIndex = renameIndex;
-            return task;
+            return Show(InputNameType.Rename);
         }
         private void Hide()
         {
@@ -42,6 +60,102 @@ namespace MVZ2.Scenes
         {
             ui.OnConfirm += OnConfirmCallback;
             ui.OnCancel += OnCancelCallback;
+        }
+
+        /// <summary>
+        /// 初始起名的超时兜底：玩家一段时间没有输入就用默认名字继续。
+        /// 目的是保证「新玩家进入游戏」这条路径永远不会被阻塞。
+        /// </summary>
+        private System.Collections.IEnumerator InitialNameFallbackTimeout(float seconds)
+        {
+            yield return new WaitForSecondsRealtime(seconds);
+            if (tcs == null || inputNameType != InputNameType.Initialize)
+                yield break;
+            var defaultName = "玩家" + (main.SaveManager.GetCurrentUserIndex() + 1);
+            Debug.LogWarning($"[NameInput] 等待用户名超时，使用默认名字继续：{defaultName}");
+            var result = tcs;
+            tcs = null;
+            inputNameType = InputNameType.None;
+            gameObject.SetActive(false);
+            result.TrySetResult(defaultName);
+        }
+        #region 平台原生输入面板
+        /// <summary>打开 Builda 平台原生输入面板；不可用时返回 false，由调用方回落到自绘对话框。</summary>
+        private bool TryOpenPlatformPanel(string defaultValue)
+        {
+            if (platformPanelOpening)
+                return true;
+            platformPanelOpening = true;
+            int maxLength = 16;
+            if (ui != null && ui.InputField != null && ui.InputField.characterLimit > 0)
+                maxLength = ui.InputField.characterLimit;
+            try
+            {
+                // JS 侧签名：Builda.input.showInputPanel({ placeholder, defaultValue, maxLength })
+                var opts = new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "placeholder", string.Empty },
+                    { "defaultValue", defaultValue ?? string.Empty },
+                    { "maxLength", maxLength },
+                };
+                Builda.BuildaSDK.Call("input.showInputPanel", new object[] { opts }, OnPlatformPanelResult);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                platformPanelOpening = false;
+                Debug.LogWarning("[NameInput] 平台输入面板调用失败，回落到自绘对话框：" + e.Message);
+                return false;
+            }
+        }
+        private void OnPlatformPanelResult(Builda.BuildaResult r)
+        {
+            platformPanelOpening = false;
+            if (!r.Ok)
+            {
+                // 平台面板不可用（桌面/无宿主）：此时才显示自绘对话框，用物理键盘输入。
+                Debug.Log($"[NameInput] 平台输入面板不可用（{r.Error?.Code}），回落到游戏内对话框");
+                ShowDialogInternal(string.Empty);
+                return;
+            }
+            var map = r.DataMap;
+            bool confirmed = map != null && map.TryGetValue("confirmed", out var c) && c is bool cb && cb;
+            string text = map != null && map.TryGetValue("text", out var t) ? (t as string ?? string.Empty) : string.Empty;
+            Debug.Log($"[NameInput] 平台输入面板返回 confirmed={confirmed} text={text}");
+            if (!confirmed)
+            {
+                // 取消：对话框仍然开着，玩家可以改主意再点一次输入框
+                return;
+            }
+            // 把平台返回的文本回填到游戏内输入框，由玩家点「确认」提交
+            if (ui != null && ui.InputField != null)
+            {
+                ui.InputField.text = text;
+            }
+        }
+        #endregion
+        /// <summary>
+        /// 平台面板超时保护：3 秒内没有回调就回落到自绘对话框。
+        /// </summary>
+        private System.Collections.IEnumerator PlatformPanelTimeout(float seconds)
+        {
+            yield return new WaitForSecondsRealtime(seconds);
+            if (!platformPanelOpening)
+                yield break;
+            platformPanelOpening = false;
+            Debug.LogWarning("[NameInput] 平台输入面板超时未响应，回落到自绘对话框");
+            ShowDialogInternal(string.Empty);
+        }
+
+        #region 自绘对话框（回落）
+        private void ShowDialogInternal(string error)
+        {
+            gameObject.SetActive(true);
+            if (ui != null && ui.gameObject != gameObject)
+                ui.gameObject.SetActive(true);
+            ui.ResetPosition();
+            ui.ClearContent();
+            ui.SetErrorMessage(error);
         }
         private void OnConfirmCallback(string value)
         {
@@ -62,6 +176,21 @@ namespace MVZ2.Scenes
                 ui.SetErrorMessage(error);
                 return;
             }
+            Hide();
+        }
+        #endregion
+        private void SubmitName(string value)
+        {
+            if (!ValidateUserName(value, out var message))
+            {
+                var error = main.LanguageManager._(message);
+                Debug.Log($"[NameInput] 名字不合法：{error}");
+                // 对话框本来就在显示，直接显示错误；同时让玩家在原生面板里改
+                ShowDialogInternal(error);
+                TryOpenPlatformPanel(value);
+                return;
+            }
+            tcs?.TrySetResult(value);
             Hide();
         }
         private bool ValidateUserName(string name, out string? message)
@@ -92,6 +221,8 @@ namespace MVZ2.Scenes
         private InputNameType inputNameType;
         private int renamingUserIndex = -1;
         private TaskCompletionSource<string>? tcs;
+        private bool platformPanelOpening;
+        private bool platformInputSubscribed;
     }
     public enum InputNameType
     {

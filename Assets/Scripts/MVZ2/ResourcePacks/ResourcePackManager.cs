@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using PVZEngine.Tools.Unity;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using MVZ2.Saves;
 
 namespace MVZ2.ResourcePacks
 {
@@ -289,6 +290,9 @@ namespace MVZ2.ResourcePacks
                 using var stream = File.Open(path, FileMode.Create);
                 using var writer = new StreamWriter(stream);
                 writer.Write(json);
+                writer.Flush();
+                // 同步到云端（WebView 本地存储可能不持久）
+                CloudSaveManager.QueuePush(path);
             }
             catch (Exception e)
             {
@@ -481,6 +485,16 @@ namespace MVZ2.ResourcePacks
         #region 加载内置
         public async Task<byte[]> LoadBuiltinBytes()
         {
+            // Builda/WebGL 改造：优先从 Resources 读取内置资源包。
+            // Addressables.LoadAssetAsync<TextAsset>("ResourcePack") 在 WebGL 下
+            // bundle 下载成功但 handle 永不完成，会卡死初始化。
+            // builtin.bytes 需复制到 Assets/Resources/。
+            var res = UnityEngine.Resources.Load<TextAsset>("builtin");
+            if (res != null)
+            {
+                return res.bytes;
+            }
+            Debug.LogWarning("[ResourcePack] Resources 未命中 builtin，回退 Addressables");
             var op = Addressables.LoadAssetAsync<TextAsset>("ResourcePack");
             var textAsset = await op.Task;
             return textAsset.bytes;

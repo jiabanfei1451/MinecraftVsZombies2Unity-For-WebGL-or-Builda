@@ -23,65 +23,50 @@ namespace MVZ2.Supporters
     {
         public void StartUpdateSponsors()
         {
-            if (sponsorPipeline != null)
-            {
-                return;
-            }
-            sponsorPipeline = new TaskPipeline();
-            sponsorPipeline.AddTask(new PipelineTask(TASK_LOAD_SPONSORS, async (p) =>
-            {
-                await PullSponsors(p);
-            }));
-            var sponsorTask = sponsorPipeline.Run();
-            sponsorTask.ContinueWith((t) =>
-            {
-                sponsorPipeline = null;
-            });
-        }
-        public void ForceUpdateSponsors(Action<bool>? onFinished)
-        {
-            if (sponsorPipeline != null)
-            {
-                return;
-            }
-            sponsorPipeline = new TaskPipeline();
-            sponsorPipeline.AddTask(new PipelineTask(TASK_LOAD_SPONSORS, async (p) =>
-            {
-                bool result = await ForcePullSponsors(p);
-                onFinished?.Invoke(result);
-                OnSponsorUpdateFinished?.Invoke(result);
-            }));
-            var sponsorTask = sponsorPipeline.Run();
-            sponsorTask.ContinueWith((t) =>
-            {
-                sponsorPipeline = null;
-            });
-        }
-        public async Task PullSponsors(TaskProgress progress)
-        {
-            SponsorInfos? sponserCache = null;
+            // Builda/WebGL：已移除爱发电赞助者名单的网络拉取。
+            // 只读取本地缓存，避免无谓的网络请求、CORS 报错和启动期噪音日志。
             try
             {
-                sponserCache = LoadSponsorsCache();
-                if (sponserCache != null)
-                {
-                    SetCurrentSponsorInfos(sponserCache);
-                }
+                var cache = LoadSponsorsCache();
+                if (cache != null)
+                    SetCurrentSponsorInfos(cache);
             }
             catch (Exception e)
             {
                 Debug.LogError($"加载赞助者名单缓存时出现错误：{e}");
             }
-
-            if (!ShouldRepull(sponserCache))
+        }
+        public void ForceUpdateSponsors(Action<bool>? onFinished)
+        {
+            // Builda/WebGL：已移除爱发电赞助者名单的网络拉取，这里只刷新本地缓存并回报未更新。
+            try
             {
-                Debug.Log("赞助者名单无需更新。");
-                progress.SetProgress(1, "No need to pull");
-                return;
+                var cache = LoadSponsorsCache();
+                if (cache != null)
+                    SetCurrentSponsorInfos(cache);
             }
-
-            bool result = await ForcePullSponsors(progress);
-            OnSponsorUpdateFinished?.Invoke(result);
+            catch (Exception e)
+            {
+                Debug.LogError($"加载赞助者名单缓存时出现错误：{e}");
+            }
+            onFinished?.Invoke(false);
+            OnSponsorUpdateFinished?.Invoke(false);
+        }
+        public Task PullSponsors(TaskProgress progress)
+        {
+            // Builda/WebGL：已移除爱发电赞助者名单的网络拉取。
+            try
+            {
+                var cache = LoadSponsorsCache();
+                if (cache != null)
+                    SetCurrentSponsorInfos(cache);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"加载赞助者名单缓存时出现错误：{e}");
+            }
+            progress.SetProgress(1, "Finished");
+            return Task.CompletedTask;
         }
         public async Task<bool> ForcePullSponsors(TaskProgress progress)
         {
@@ -162,39 +147,10 @@ namespace MVZ2.Supporters
         {
             return isUpdating;
         }
-        private async Task<SponsorItem[]> GetAllSponsors(TaskProgress progress)
+        private Task<SponsorItem[]> GetAllSponsors(TaskProgress progress)
         {
-            Debug.Log("开始下载赞助者名单。");
-            List<SponsorItem> sponsorList = new List<SponsorItem>();
-            int numPerPage = 100;
-            progress.SetProgress(0, "Page 1");
-            var resp = await RequestSponsors(1, numPerPage);
-            if (resp.Result == null)
-            {
-                return Array.Empty<SponsorItem>();
-            }
-            if (resp.Result.List is SponsorItem[] items)
-            {
-                sponsorList.AddRange(items);
-                Debug.Log("赞助者名单第1页下载成功。");
-            }
-            var totalPage = resp.Result.TotalPage;
-            Debug.Log($"赞助者名单共{totalPage}页。");
-
-            for (int i = 2; i <= totalPage; i++)
-            {
-                progress.SetProgress((i - 1) / (float)totalPage, $"Page {i}");
-                var obj = await RequestSponsors(i, numPerPage);
-                if (obj.Result?.List != null)
-                {
-                    sponsorList.AddRange(obj.Result.List);
-                    Debug.Log($"赞助者名单第{i}页下载成功。");
-                }
-            }
-            progress.SetProgress(1, "Finished");
-            Debug.Log($"赞助者名单下载成功。");
-
-            return sponsorList.ToArray();
+            // Builda/WebGL：已移除爱发电 API，不再下载赞助者名单。
+            return Task.FromResult(Array.Empty<SponsorItem>());
         }
         private async Task<GenericResp<ItemList<SponsorItem>>> RequestSponsors(int page = 0, int numPerPage = 100, int[]? targetUserID = null)
         {
@@ -426,9 +382,9 @@ namespace MVZ2.Supporters
         [SerializeField]
         private string apiToken = string.Empty;
         [SerializeField]
-        private string baseUrl = "https://afdian.com/api";
+        private string baseUrl = "";   // 已移除爱发电 API，不再使用
         [SerializeField]
-        private string sponsorQueryPath = "/open/query-sponsor";
+        private string sponsorQueryPath = "";   // 已移除爱发电 API，不再使用
         [SerializeField]
         private int responseTimeout = 10;
         [SerializeField]

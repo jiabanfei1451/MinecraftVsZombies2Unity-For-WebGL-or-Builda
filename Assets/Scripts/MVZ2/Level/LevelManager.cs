@@ -19,6 +19,7 @@ using PVZEngine.Level;
 using PVZEngine.Tools.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using MVZ2.Saves;
 
 namespace MVZ2.Level
 {
@@ -84,6 +85,8 @@ namespace MVZ2.Level
             writer.WriteLine(contentJson);
 
             UpdateCurrentEndlessFlags(stageID, controller.GetCurrentFlag());
+            // 关卡进行中存档也同步到云端（只保留一份，进入别的关卡会覆盖）
+            CloudSaveManager.QueuePush(path);
         }
         public void LoadLevel(NamespaceID areaID, NamespaceID stageID)
         {
